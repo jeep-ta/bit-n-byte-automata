@@ -26,14 +26,19 @@ class DFA:
         q, trace, prefix = self.start, [self.start], []
         for i, a in enumerate(symbols, 1):
             if (q, a) not in self.transitions:
-                return dict(classification='NONCONFORMING', final=q, trace=trace,
-                            position=i, observed=a, permitted=sorted(x for s, x in self.transitions if s == q),
-                            valid_prefix=prefix, reason='unknown event' if a not in self.alphabet else 'undefined transition')
+                return dict(
+                    classification='NONCONFORMING', final=q, trace=trace,
+                    position=i, observed=a,
+                    permitted=sorted(x for s, x in self.transitions if s == q),
+                    valid_prefix=prefix,
+                    reason=('unknown event' if a not in self.alphabet
+                            else 'undefined transition'))
             q = self.transitions[q, a]
             trace.append(q)
             prefix.append(a)
-        return dict(classification='CONFORMING' if q in self.accepts else 'INCOMPLETE',
-                    final=q, trace=trace, valid_prefix=prefix)
+        return dict(
+            classification='CONFORMING' if q in self.accepts else 'INCOMPLETE',
+            final=q, trace=trace, valid_prefix=prefix)
 
     def table(self):
         return dict(states=sorted(self.states, key=str), alphabet=sorted(self.alphabet), start=self.start,

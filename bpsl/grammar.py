@@ -98,7 +98,10 @@ def parse_stack(kinds, g=BPSL):
         if x in g.variables:
             rhs = table.get((x, look))
             if rhs is None:
-                return dict(accepted=False, position=i, expected=sorted(a for v, a in table if v == x), observed=look, trace=trace, tree=root)
+                return dict(
+                    accepted=False, position=i,
+                    expected=sorted(a for v, a in table if v == x),
+                    observed=look, trace=trace, tree=root)
             children = [dict(symbol=s, children=[]) for s in rhs]
             node['children'] = children
             stack[0:0] = list(zip(rhs, children))

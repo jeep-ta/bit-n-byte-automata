@@ -1,10 +1,10 @@
 import unittest
-from .scenarios import run_cases
+from .midterm_scenarios import run_midterm_cases
 
 
 class ProjectTests(unittest.TestCase):
     def test_requirement_scenarios(self):
-        for row in run_cases():
+        for row in run_midterm_cases():
             with self.subTest(id=row['id'], scenario=row['scenario']):
                 self.assertEqual(row['expected'], row['actual'])
 

@@ -3,6 +3,9 @@
 A Formal Language and Automata-Based System for Business Process Specification,
 Conformance Checking, and Violation Detection
 
+This version covers the corrected Prelim foundation and the Midterm project stage.
+The browser has three tools: Process checker, Regex lab, and Grammar & PDA.
+
 Group: Mark Neil D. Oligo and Jeptha M. Osorio. Course: Automata and Compiler
 Theories and Formal Languages, BS Computer Science - K36. Instructor: Mr. Maxil S. Urocay.
 
@@ -62,9 +65,10 @@ python -m unittest discover -v
 ```
 
 `run_tests.py` records each scenario's expected and actual results and PASS/FAIL in
-JSON and CSV. The unittest command wraps the same scenarios in **one test method
-with subtests**; it does not mean 99 separately discovered test methods. The recorded
-milestone run passed 99/99 scenarios. Rerun to obtain results for your environment.
+JSON and CSV. The unittest command wraps the same 109 scenario records in one test
+method with subtests. The suite retains 99 original cases and adds 10 midterm
+checks for ambiguity, balanced-language recognition, deeper stacks, minimization,
+and distinguishing suffixes. Rerun to obtain results for your environment.
 CLI validation errors exit with code 2. Valid compilations exit 0 even when the
 observed execution is nonconforming or incomplete; classification is in the JSON.
 
@@ -138,13 +142,14 @@ contains nine browser viewport screenshots, capture metadata, formal artifacts,
 CLI runs, test records, a report, and a demonstration guide. Screenshot capture uses an
 optional development-only Node/Playwright tool; neither is an application dependency.
 
-The requirements inventory retains 32 groups. 26 completed groups / 32 = 81.25%
-under disclosed equal weighting, a self-assessment not instructor approval.
-The memo minimum is 70%; the proposal's cumulative targets are 50%, 75%, 100%.
-TM/RAM, computability, full complexity analysis, polynomial reduction, performance
-benchmarks, and final paper/video/defense remain pending Final-term work. No
-performance results are claimed. The project is a small-input teaching prototype;
-full intermediate traces and derivations can consume substantial memory.
+The application source and current manuscript are restricted to retained Prelim
+and Midterm work. The midterm checklist still has partial items: general grammar
+validation, standalone CNF/GNF diagnostic validators, a dedicated final-state PDA
+acceptance mode, general NPDA branching, explicit epsilon leaves, and complete
+per-substitution transformation logs. The manuscript records these limits; passing
+tests are not a claim of full checklist completion. Member review, course approvals,
+presentation requirements, and defense remain part of the course submission process.
+Full intermediate traces and derivations can consume substantial memory.
 
 ## AI assistance and ownership
 
@@ -156,3 +161,26 @@ with applicable instructor policy. Proposed ownership of remaining work is in th
 report and is not a record of completed individual contributions.
 
 No submission or external messaging was performed.
+
+## Midterm manuscript and preliminary measurements
+
+The evidence runner generates formal artifacts, 109 scenario records, source
+hashes, and measured grammar/parser results under `manuscript/midterm/evidence/`.
+Reproduce the paper's evidence with the following command. It uses the same scenarios as `run_tests.py`
+and `unittest`, and measures grammar simplification, CNF, scoped GNF, predictive
+parsing, and CYK membership.
+
+```powershell
+python manuscript/midterm/reproduce_midterm.py
+```
+
+Optional preliminary compiler and DFA measurements are available separately:
+
+```powershell
+python benchmark.py --output benchmark_results --trials 7
+```
+
+Both measurement tools retain every wall-time trial and take a separate peak of
+Python traced allocations. Synthetic workloads on one machine support the
+preliminary performance discussion required for Midterm, without production or
+cross-platform performance guarantees.

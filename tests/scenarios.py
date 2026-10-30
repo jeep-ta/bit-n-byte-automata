@@ -11,12 +11,32 @@ SOURCE = (Path(__file__).resolve().parents[1] / 'samples/procurement.bpsl').read
 def run_cases():
     records = []
     def check(id, scenario, expected, operation):
+        import inspect
+        try:
+            input_definition = inspect.getsource(operation).strip()
+            import json
+            closure = inspect.getclosurevars(operation)
+            bindings = {}
+            captured = {**closure.globals, **closure.nonlocals}
+            captured.update({k:p.default for k,p in inspect.signature(operation).parameters.items()
+                             if p.default is not inspect.Parameter.empty})
+            for name, value in captured.items():
+                if callable(value):
+                    continue
+                if hasattr(value, 'table'):
+                    value = value.table()
+                elif hasattr(value, 'display'):
+                    value = value.display()
+                bindings[name] = value
+            input_definition += '\nBound inputs: ' + json.dumps(bindings, default=repr, ensure_ascii=True)
+        except (OSError, TypeError):
+            input_definition = scenario
         try:
             actual = operation()
         except Exception as e:
             actual = f'UNEXPECTED {type(e).__name__}: {e}'
         records.append(dict(id=id, scenario=scenario, expected=expected, actual=actual,
-                            status='PASS' if actual == expected else 'FAIL'))
+                            status='PASS' if actual == expected else 'FAIL', input_definition=input_definition))
     def stage(source):
         try:
             compile_source(source)
