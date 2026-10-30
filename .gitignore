@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+test_results/
+demo-preview.png
+logo-preview.png
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+{
+  "valid": ["approve", "purchase", "pay", "complete"],
+  "skipped": ["approve", "pay", "complete"],
+  "incomplete": ["approve", "purchase"],
+  "unknown": ["approve", "refund"],
+  "empty": []
+}

@@ -1,0 +1,22 @@
+PROCESS Procurement {
+    STATE Requested;
+    STATE Approved;
+    STATE Purchased;
+    STATE Paid;
+    STATE Completed;
+
+    EVENT approve;
+    EVENT purchase;
+    EVENT pay;
+    EVENT complete;
+
+    START Requested;
+    ACCEPT Completed;
+
+    TRANSITION Requested ON approve TO Approved;
+    TRANSITION Approved ON purchase TO Purchased;
+    TRANSITION Purchased ON pay TO Paid;
+    TRANSITION Paid ON complete TO Completed;
+    STATE Isolated;
+    ACCEPT Isolated;
+}
